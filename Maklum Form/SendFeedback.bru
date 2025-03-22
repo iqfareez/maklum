@@ -1,0 +1,22 @@
+meta {
+  name: SendFeedback
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{BaseUrl}}/api/send
+  body: json
+  auth: inherit
+}
+
+headers {
+  Accept: application/json
+}
+
+body:json {
+  {
+    "email": "delivered@resend.dev",
+    "message" : "(Contoh) Apps solat ni ringkas dan bagus cuma jika ada penambahan untuk widget lagi bagus sebab x perlu buka apps untuk tengok waktu solat"
+  }
+}

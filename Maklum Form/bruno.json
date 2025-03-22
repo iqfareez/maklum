@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "Maklum Form",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
