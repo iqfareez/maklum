@@ -5,49 +5,86 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SendFeedbackRequest;
 use App\Mail\FeedbackReceived;
 use App\Models\Feedback;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class SendFeedbackController extends Controller
 {
+    /**
+     * Admin email address for feedback notifications
+     */
+    private const ADMIN_EMAIL = 'mptwaktusolat@gmail.com';
+
     public function sendFeedback(SendFeedbackRequest $request)
     {
-        // Validate the request data
-        $feedbackData = $request->validated();
+        try {
+            $feedbackData = $request->validated();
 
-        // Save to database
-        $feedback = new Feedback();
-        $feedback->public_id = $this->makePublicId($feedback->id);
-        $feedback->name = data_get($feedbackData, 'name');
-        $feedback->email = data_get($feedbackData, 'email');
-        $feedback->message = data_get($feedbackData, 'message');
+            return DB::transaction(function () use ($feedbackData) {
+                // Save to database
+                $feedback = new Feedback();
+                $feedback->name = data_get($feedbackData, 'name');
+                $feedback->email = data_get($feedbackData, 'email');
+                $feedback->message = data_get($feedbackData, 'message');
 
-        if (isset($feedbackData['app_info'])) {
-            $feedback->app_info = json_encode($feedbackData['app_info']);
+                // Process optional JSON fields
+                $this->processOptionalFields($feedback, $feedbackData);
+
+                $feedback->public_id = $this->makePublicId($feedback->id);
+                $feedback->save();
+
+                // Send email notifications
+                $this->sendNotificationEmails($feedbackData);
+
+                return response()->json([
+                    'message' => 'Feedback sent successfully!',
+                    'reference' => $feedback->public_id
+                ], 200);
+            });
+        } catch (\Exception $e) {
+            Log::error('Failed to process feedback: ' . $e->getMessage());
+            return response()->json(['message' => 'Failed to process feedback. Please try again later.'], 500);
         }
-        if (isset($feedbackData['device_info'])) {
-            $feedback->device_info = json_encode($feedbackData['device_info']);
-        }
-        if (isset($feedbackData['additional_info'])) {
-            $feedback->additional_info = json_encode($feedbackData['additional_info']);
-        }
+    }
 
-        $feedback->save();
+    /**
+     * Process optional JSON fields for the feedback
+     *
+     * @param Feedback $feedback
+     * @param array $feedbackData
+     * @return void
+     */
+    private function processOptionalFields(Feedback $feedback, array $feedbackData): void
+    {
+        $jsonFields = ['app_info', 'device_info', 'additional_info'];
 
-        // Check is feedbackData 'email' is valid email and not null, send email
-        if (isset($feedbackData['email'])) {
+        foreach ($jsonFields as $field) {
+            if (isset($feedbackData[$field])) {
+                $feedback->$field = json_encode($feedbackData[$field]);
+            }
+        }
+    }
+
+    /**
+     * Send notification emails to user and admin
+     *
+     * @param array $feedbackData
+     * @return void
+     */
+    private function sendNotificationEmails(array $feedbackData): void
+    {
+        $mailInstance = new FeedbackReceived($feedbackData);
+
+        if (data_get($feedbackData, 'email')) {
             Mail::to($feedbackData['email'])
-                ->bcc('mptwaktusolat@gmail.com')
-                ->send(new FeedbackReceived($feedbackData));
+                ->bcc(self::ADMIN_EMAIL)
+                ->send($mailInstance);
         } else {
-            // If the sender's email is not available or invalid, just let the admin know
-            Mail::bcc('mptwaktusolat@gmail.com')
-                ->send(new FeedbackReceived($feedbackData));
+            // If the sender's email is not available or invalid, just notify admin
+            Mail::to(self::ADMIN_EMAIL)
+                ->send($mailInstance);
         }
-
-        // Process the feedback (e.g., save to database, send email, etc.)
-        // For demonstration purposes, we'll just return a success response
-        return response()->json(['message' => 'Feedback sent successfully!'], 200);
     }
 
     /**
@@ -56,7 +93,7 @@ class SendFeedbackController extends Controller
      * @param int $id
      * @return string
      */
-    private function makePublicId($id)
+    private function makePublicId()
     {
         // Generate a random alphanumeric uppercase string of length 5
         $randomString = strtoupper(\Illuminate\Support\Str::random(5));
