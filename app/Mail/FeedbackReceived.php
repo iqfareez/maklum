@@ -28,9 +28,13 @@ class FeedbackReceived extends Mailable
      */
     public function envelope(): Envelope
     {
+        $sender_email = data_get($this->feedbackData, 'email');
+
         return new Envelope(
             subject: 'MPT Feedback Received',
-            replyTo: [new Address($this->feedbackData['email'])],
+            replyTo: $sender_email != null ? [
+                new Address($sender_email, data_get($this->feedbackData, 'name'))
+            ] : null,
         );
     }
 

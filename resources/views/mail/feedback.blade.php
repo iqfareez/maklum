@@ -1,7 +1,7 @@
 <x-mail::message>
 # Feedback Received
 
-Dear user, thank you for submitting your valuable feedback. 
+Dear {{ isset($feedback['email']) ? '' : 'Anonymous' }} user, thank you for submitting your valuable feedback. 
 
 <x-mail::panel>
     {{ $feedback['message'] }}

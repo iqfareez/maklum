@@ -17,10 +17,12 @@ class SendFeedbackController extends Controller
 
         // Check is feedbackData 'email' is valid email and not null, send email
         if (isset($feedbackData['email'])) {
-            // Send email logic here
-            // For example, using Laravel's Mail facade
             Mail::to($feedbackData['email'])
                 ->bcc('mptwaktusolat@gmail.com')
+                ->send(new FeedbackReceived($feedbackData));
+        } else {
+            // If the sender's email is not available or invalid, just let the admin know
+            Mail::bcc('mptwaktusolat@gmail.com')
                 ->send(new FeedbackReceived($feedbackData));
         }
 
