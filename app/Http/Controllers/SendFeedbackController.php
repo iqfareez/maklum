@@ -21,9 +21,17 @@ class SendFeedbackController extends Controller
         $feedback->name = data_get($feedbackData, 'name');
         $feedback->email = data_get($feedbackData, 'email');
         $feedback->message = data_get($feedbackData, 'message');
-        $feedback->app_info = data_get($feedbackData, 'app_info');
-        $feedback->device_info = data_get($feedbackData, 'device_info');
-        $feedback->additional_info = data_get($feedbackData, 'additional_info');
+
+        if (isset($feedbackData['app_info'])) {
+            $feedback->app_info = json_encode($feedbackData['app_info']);
+        }
+        if (isset($feedbackData['device_info'])) {
+            $feedback->device_info = json_encode($feedbackData['device_info']);
+        }
+        if (isset($feedbackData['additional_info'])) {
+            $feedback->additional_info = json_encode($feedbackData['additional_info']);
+        }
+
         $feedback->save();
 
         // Check is feedbackData 'email' is valid email and not null, send email

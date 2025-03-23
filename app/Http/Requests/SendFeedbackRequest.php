@@ -24,7 +24,10 @@ class SendFeedbackRequest extends FormRequest
         return [
             'name' => 'nullable|string|max:255',
             'email' => 'nullable|email|max:255',
-            'message' => 'required|string|max:500',
+            'message' => 'required|string',
+            'app_info' => 'nullable',
+            'device_info' => 'nullable',
+            'additional_info' => 'nullable',
         ];
     }
 }
