@@ -47,6 +47,7 @@ The steps are simple.
    - Wait for the SSL certificate to be issued. (If failed, try again.)
     ![image](https://github.com/user-attachments/assets/558472ee-94c0-41fb-9aec-ad4d8047d348)
 1. Visit your site at `https://feedback.mywebsite.com` and you should see the app running.
+1. Update who can access the `/admin` panel. See: https://filamentphp.com/docs/3.x/panels/users#authorizing-access-to-the-panel
 
 ## Setup Supervisor
 
