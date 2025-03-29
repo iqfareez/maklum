@@ -1,4 +1,4 @@
-# Deployment
+# :rocket: Deployment
 
 ## Using Cloudpanel on a VPS
 
@@ -9,6 +9,7 @@ The steps are simple.
 1. You need to own a domain.
 1. Provision a VPS and install **Cloudpanel**. Steps can be found here: [Cloudpanel Installation](https://www.cloudpanel.io/docs/v2/getting-started/)
 1. Create a new **PHP site** in Cloudpanel and note down the site name. For example, `feedback.mywebsite.com`.
+   ![image](https://github.com/user-attachments/assets/889cc98e-ed8a-466c-af7a-2d4ae64a4306)
 1. Create a new **database** in Cloudpanel and note down the database name, username, and password.
 1. Install **NodeJs**. Refer [docs](https://www.cloudpanel.io/docs/v2/php/guides/nodejs/)
 1. SSH into your VPS and clone the repository into the site directory. Example `~/htdocs/feedback.mywebsite.com/`.
@@ -44,6 +45,7 @@ The steps are simple.
    - Go to the site in Cloudpanel and click on the SSL tab.
    - Select the domain and click Action > New Let's Encrypt Certificate.
    - Wait for the SSL certificate to be issued. (If failed, try again.)
+    ![image](https://github.com/user-attachments/assets/558472ee-94c0-41fb-9aec-ad4d8047d348)
 1. Visit your site at `https://feedback.mywebsite.com` and you should see the app running.
 
 ## Setup Supervisor
