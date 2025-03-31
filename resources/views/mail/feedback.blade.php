@@ -1,7 +1,8 @@
 <x-mail::message>
+
 # Feedback Received
 
-Dear {{ isset($feedback['email']) ? '' : 'Anonymous' }} user, thank you for submitting your valuable feedback. 
+Dear {{ isset($feedback->email) ? '' : 'Anonymous' }} user, thank you for submitting your valuable feedback. 
 
 <x-mail::panel>
     {{ $feedback['message'] }}
@@ -10,5 +11,5 @@ Dear {{ isset($feedback['email']) ? '' : 'Anonymous' }} user, thank you for subm
 <sub>This automated message lets you know that we have received your feedback and will review it shortly. </sub>
 
 Thanks,<br>
-Fareez
+{{ config('tenant.admin') }}
 </x-mail::message>

@@ -11,11 +11,6 @@ use Illuminate\Support\Facades\Mail;
 
 class SendFeedbackController extends Controller
 {
-    /**
-     * Admin email address for feedback notifications
-     */
-    private const ADMIN_EMAIL = 'mptwaktusolat@gmail.com';
-
     public function sendFeedback(SendFeedbackRequest $request)
     {
         try {
@@ -31,7 +26,7 @@ class SendFeedbackController extends Controller
                 // Process optional JSON fields
                 $this->processOptionalFields($feedback, $feedbackData);
 
-                $feedback->public_id = $this->makePublicId($feedback->id);
+                $feedback->public_id = $this->makePublicId();
                 $feedback->save();
 
                 // Send email notifications
@@ -78,11 +73,11 @@ class SendFeedbackController extends Controller
 
         if (data_get($feedbackData, 'email')) {
             Mail::to($feedbackData['email'])
-                ->bcc(self::ADMIN_EMAIL)
+                ->bcc(config('tenant.email'))
                 ->send($mailInstance);
         } else {
             // If the sender's email is not available or invalid, just notify admin
-            Mail::to(self::ADMIN_EMAIL)
+            Mail::to(config('tenant.email'))
                 ->send($mailInstance);
         }
     }
