@@ -3,16 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\FeedbackResource\Pages;
-use App\Filament\Resources\FeedbackResource\RelationManagers;
 use App\Models\Feedback;
-use Filament\Forms;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Support\Enums\FontWeight;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class FeedbackResource extends Resource
 {
@@ -38,20 +34,21 @@ class FeedbackResource extends Resource
                     ->badge()
                     ->color('primary'),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime('d/m/Y H:i:s')
+                    ->dateTime('d/m/Y h:i A')
                     ->sortable()
-                    ->wrap(),
+                    ->wrap()
+                    ->weight(fn ($record) => $record->created_at->isToday() ? FontWeight::Bold : null),
                 Tables\Columns\TextColumn::make('message')
                     ->limit(65)
                     ->wrap()
                     ->html(),
-                Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('email'),
-
+                Tables\Columns\TextColumn::make('email')
+                    ->toggleable(),
             ])
             ->filters([
                 //
             ])
+            ->defaultSort('created_at', 'desc')
             ->actions([
                 Tables\Actions\ViewAction::make()
                     ->url(fn(Feedback $record) => FeedbackResource::getUrl('view', ['record' => $record])),
