@@ -33,6 +33,20 @@ class FeedbackSeeder extends Seeder
             'timezone' => '8:00:00.000000'
         ]);
 
+        $platformInfo1 = json_encode([
+            'platform' => 'Flutter',
+            'channel' => 'stable',
+            'version' => '3.7.12',
+            'dart_sdk' => '3.0.6',
+        ]);
+
+        $platformInfo2 = json_encode([
+            'platform' => 'React Native',
+            'channel' => 'beta',
+            'version' => '0.72.4',
+            'js_engine' => 'Hermes',
+        ]);
+
         $deviceInfo2 = json_encode([
             'device' => 'Redmi-Note10',
             'androidSdk' => '33',
@@ -75,6 +89,7 @@ class FeedbackSeeder extends Seeder
                 'message' => 'As Salam, Dh install dlm hp baru,setting semua dh granted,tetapi azan ada masa ada,kadang takde langsung, x taulaa kenapa..sblm ni pakai ke hp Redmi, lancar je, sejak beralih ke Tecno spark 30 5g ni..harap isu boleh di selesaikan',
                 'app_info' => $appInfo,
                 'device_info' => $deviceInfo1,
+                'platform_info' => $platformInfo1,
                 'additional_info' => $additionalInfo1,
                 'created_at' => Carbon::now()->subDays(3),
                 'updated_at' => Carbon::now()->subDays(3)
@@ -88,6 +103,7 @@ class FeedbackSeeder extends Seeder
                 'message' => 'Assalamualaikum, mohon tambah fungsi widget untuk memaparkan waktu solat di home screen. Terima kasih.',
                 'app_info' => $appInfo,
                 'device_info' => $deviceInfo2,
+                'platform_info' => $platformInfo2,
                 'additional_info' => $additionalInfo2,
                 'created_at' => Carbon::now()->subDays(5),
                 'updated_at' => Carbon::now()->subDays(5)
@@ -101,6 +117,7 @@ class FeedbackSeeder extends Seeder
                 'message' => 'Salam, app selalu crash bila saya buka calendar view. Boleh tolong perbaiki? Terima kasih.',
                 'app_info' => $appInfo,
                 'device_info' => $deviceInfo2,
+                'platform_info' => $platformInfo2,
                 'additional_info' => $additionalInfo2,
                 'created_at' => Carbon::now()->subWeeks(1),
                 'updated_at' => Carbon::now()->subWeeks(1)
@@ -114,6 +131,7 @@ class FeedbackSeeder extends Seeder
                 'message' => 'App tidak boleh detect lokasi dengan tepat. Saya di Selangor tapi app tunjukkan waktu solat untuk Kedah.',
                 'app_info' => $appInfo,
                 'device_info' => $deviceInfo1,
+                'platform_info' => $platformInfo1,
                 'additional_info' => $additionalInfo1,
                 'created_at' => Carbon::now()->subWeeks(2),
                 'updated_at' => Carbon::now()->subWeeks(2)
@@ -127,6 +145,7 @@ class FeedbackSeeder extends Seeder
                 'message' => 'Alhamdulillah, terima kasih kerana mencipta app yang sangat membantu. Semoga Allah memberkati usaha anda.',
                 'app_info' => $appInfo,
                 'device_info' => $deviceInfo2,
+                'platform_info' => null,
                 'additional_info' => $additionalInfo2,
                 'created_at' => Carbon::now()->subWeeks(3),
                 'updated_at' => Carbon::now()->subWeeks(3)

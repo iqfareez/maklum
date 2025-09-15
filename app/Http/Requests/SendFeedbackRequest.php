@@ -27,6 +27,7 @@ class SendFeedbackRequest extends FormRequest
             'message' => 'required|string',
             'app_info' => 'nullable',
             'device_info' => 'nullable',
+            'platform_info' => 'nullable',
             'additional_info' => 'nullable',
         ];
     }

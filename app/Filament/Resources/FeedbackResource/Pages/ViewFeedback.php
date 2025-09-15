@@ -82,6 +82,29 @@ class ViewFeedback extends ViewRecord
                             ->markdown()
                             ->columnSpanFull(),
                     ]),
+                Section::make('Platform Information')
+                    ->collapsible()
+                    ->schema([
+                        TextEntry::make('platform_info')
+                            ->label(false)
+                            ->formatStateUsing(function ($state) {
+                                if (!$state) return '';
+
+                                $decodedInfo = json_decode($state, true);
+                                if (!$decodedInfo) return $state;
+
+                                $formattedOutput = '';
+                                foreach ($decodedInfo as $key => $value) {
+                                    $formattedKey = ucwords(str_replace('_', ' ', $key));
+                                    $formattedValue = is_array($value) ? json_encode($value, JSON_PRETTY_PRINT) : $value;
+                                    $formattedOutput .= "**{$formattedKey}:** {$formattedValue}\n\n";
+                                }
+
+                                return $formattedOutput;
+                            })
+                            ->markdown()
+                            ->columnSpanFull(),
+                    ]),
                 Section::make('Other Information')
                     ->collapsible()
                     ->schema([
