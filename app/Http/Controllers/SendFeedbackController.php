@@ -52,7 +52,7 @@ class SendFeedbackController extends Controller
      */
     private function processOptionalFields(Feedback $feedback, array $feedbackData): void
     {
-        $jsonFields = ['app_info', 'device_info', 'additional_info'];
+        $jsonFields = ['app_info', 'device_info', 'platform_info', 'additional_info'];
 
         foreach ($jsonFields as $field) {
             if (isset($feedbackData[$field])) {
