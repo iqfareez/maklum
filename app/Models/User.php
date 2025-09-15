@@ -54,7 +54,7 @@ class User extends Authenticatable implements FilamentUser
      */
     public function canAccessPanel(Panel $panel): bool
     {
-        // Right now, hardcode which user can access the panel
-        return str_ends_with($this->email, 'iqmal3@outlook.com');
+        // allow all authenticated users to access Filament
+        return true;
     }
 }
