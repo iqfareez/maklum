@@ -1,4 +1,5 @@
 {
+    "name": "maklum-app",
     "private": true,
     "type": "module",
     "scripts": {
