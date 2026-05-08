@@ -13,7 +13,7 @@ class ManageFeedback extends ManageRecords
     protected function getHeaderActions(): array
     {
         return [
-            // canCreate is set to false in FeedbackResource, so this 
+            // canCreate is set to false in FeedbackResource, so this
             // button will not be shown anyway
             Actions\CreateAction::make(),
         ];

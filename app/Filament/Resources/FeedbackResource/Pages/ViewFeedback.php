@@ -42,10 +42,14 @@ class ViewFeedback extends ViewRecord
                         TextEntry::make('device_info')
                             ->label(false)
                             ->formatStateUsing(function ($state) {
-                                if (!$state) return '';
+                                if (!$state) {
+                                    return '';
+                                }
 
                                 $decodedInfo = json_decode($state, true);
-                                if (!$decodedInfo) return $state;
+                                if (!$decodedInfo) {
+                                    return $state;
+                                }
 
                                 $formattedOutput = '';
                                 foreach ($decodedInfo as $key => $value) {
@@ -65,10 +69,14 @@ class ViewFeedback extends ViewRecord
                         TextEntry::make('app_info')
                             ->label(false)
                             ->formatStateUsing(function ($state) {
-                                if (!$state) return '';
+                                if (!$state) {
+                                    return '';
+                                }
 
                                 $decodedInfo = json_decode($state, true);
-                                if (!$decodedInfo) return $state;
+                                if (!$decodedInfo) {
+                                    return $state;
+                                }
 
                                 $formattedOutput = '';
                                 foreach ($decodedInfo as $key => $value) {
@@ -88,10 +96,14 @@ class ViewFeedback extends ViewRecord
                         TextEntry::make('platform_info')
                             ->label(false)
                             ->formatStateUsing(function ($state) {
-                                if (!$state) return '';
+                                if (!$state) {
+                                    return '';
+                                }
 
                                 $decodedInfo = json_decode($state, true);
-                                if (!$decodedInfo) return $state;
+                                if (!$decodedInfo) {
+                                    return $state;
+                                }
 
                                 $formattedOutput = '';
                                 foreach ($decodedInfo as $key => $value) {
@@ -108,13 +120,17 @@ class ViewFeedback extends ViewRecord
                 Section::make('Other Information')
                     ->collapsible()
                     ->schema([
-                        Infolists\Components\TextEntry::make('additional_info')
+                        TextEntry::make('additional_info')
                             ->label(false)
                             ->formatStateUsing(function ($state) {
-                                if (!$state) return '';
+                                if (!$state) {
+                                    return '';
+                                }
 
                                 $decodedInfo = json_decode($state, true);
-                                if (!$decodedInfo) return $state;
+                                if (!$decodedInfo) {
+                                    return $state;
+                                }
 
                                 $formattedOutput = '';
                                 foreach ($decodedInfo as $key => $value) {

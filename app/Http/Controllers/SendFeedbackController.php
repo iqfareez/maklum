@@ -8,6 +8,7 @@ use App\Models\Feedback;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class SendFeedbackController extends Controller
 {
@@ -18,7 +19,7 @@ class SendFeedbackController extends Controller
 
             return DB::transaction(function () use ($feedbackData) {
                 // Save to database
-                $feedback = new Feedback();
+                $feedback = new Feedback;
                 $feedback->name = data_get($feedbackData, 'name');
                 $feedback->email = data_get($feedbackData, 'email');
                 $feedback->message = data_get($feedbackData, 'message');
@@ -34,21 +35,18 @@ class SendFeedbackController extends Controller
 
                 return response()->json([
                     'message' => 'Feedback sent successfully!',
-                    'reference' => $feedback->public_id
+                    'reference' => $feedback->public_id,
                 ], 200);
             });
         } catch (\Exception $e) {
-            Log::error('Failed to process feedback: ' . $e->getMessage());
+            Log::error('Failed to process feedback: '.$e->getMessage());
+
             return response()->json(['message' => 'Failed to process feedback. Please try again later.'], 500);
         }
     }
 
     /**
      * Process optional JSON fields for the feedback
-     *
-     * @param Feedback $feedback
-     * @param array $feedbackData
-     * @return void
      */
     private function processOptionalFields(Feedback $feedback, array $feedbackData): void
     {
@@ -63,9 +61,6 @@ class SendFeedbackController extends Controller
 
     /**
      * Send notification emails to user and admin
-     *
-     * @param array $feedbackData
-     * @return void
      */
     private function sendNotificationEmails(array $feedbackData): void
     {
@@ -85,13 +80,14 @@ class SendFeedbackController extends Controller
     /**
      * Generate a random string
      *
-     * @param int $id
+     * @param  int  $id
      * @return string
      */
     private function makePublicId()
     {
         // Generate a random alphanumeric uppercase string of length 5
-        $randomString = strtoupper(\Illuminate\Support\Str::random(5));
+        $randomString = strtoupper(Str::random(5));
+
         return "MPT-{$randomString}";
     }
 }

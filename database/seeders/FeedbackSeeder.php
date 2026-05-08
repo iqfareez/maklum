@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 
 class FeedbackSeeder extends Seeder
 {
@@ -18,7 +18,7 @@ class FeedbackSeeder extends Seeder
             'appVersion' => '2.5.3',
             'buildNumber' => '253',
             'platform' => 'Android',
-            'apiServer' => 'https://mpt-server.vercel.app/api/v2'
+            'apiServer' => 'https://mpt-server.vercel.app/api/v2',
         ]);
 
         // Sample device info JSON based on provided example
@@ -30,7 +30,7 @@ class FeedbackSeeder extends Seeder
             'androidVersion' => '14',
             'deviceLocale' => 'en_US',
             'supportedABIs' => ['arm64-v8a', 'armeabi-v7a', 'armeabi'],
-            'timezone' => '8:00:00.000000'
+            'timezone' => '8:00:00.000000',
         ]);
 
         $platformInfo1 = json_encode([
@@ -55,7 +55,7 @@ class FeedbackSeeder extends Seeder
             'androidVersion' => '13',
             'deviceLocale' => 'ms_MY',
             'supportedABIs' => ['arm64-v8a', 'armeabi-v7a', 'armeabi'],
-            'timezone' => '8:00:00.000000'
+            'timezone' => '8:00:00.000000',
         ]);
 
         $additionalInfo1 = json_encode([
@@ -64,8 +64,8 @@ class FeedbackSeeder extends Seeder
             'notifications' => 'allowed',
             'userPreferences' => [
                 'theme' => 'dark',
-                'language' => 'malay'
-            ]
+                'language' => 'malay',
+            ],
         ]);
 
         $additionalInfo2 = json_encode([
@@ -74,8 +74,8 @@ class FeedbackSeeder extends Seeder
             'notifications' => 'allowed',
             'userPreferences' => [
                 'theme' => 'light',
-                'language' => 'english'
-            ]
+                'language' => 'english',
+            ],
         ]);
 
         // Insert sample feedback records
@@ -92,7 +92,7 @@ class FeedbackSeeder extends Seeder
                 'platform_info' => $platformInfo1,
                 'additional_info' => $additionalInfo1,
                 'created_at' => Carbon::now()->subDays(3),
-                'updated_at' => Carbon::now()->subDays(3)
+                'updated_at' => Carbon::now()->subDays(3),
             ],
             [
                 'name' => 'Nur Faizah',
@@ -106,7 +106,7 @@ class FeedbackSeeder extends Seeder
                 'platform_info' => $platformInfo2,
                 'additional_info' => $additionalInfo2,
                 'created_at' => Carbon::now()->subDays(5),
-                'updated_at' => Carbon::now()->subDays(5)
+                'updated_at' => Carbon::now()->subDays(5),
             ],
             [
                 'name' => 'Mohammad Hariz',
@@ -120,7 +120,7 @@ class FeedbackSeeder extends Seeder
                 'platform_info' => $platformInfo2,
                 'additional_info' => $additionalInfo2,
                 'created_at' => Carbon::now()->subWeeks(1),
-                'updated_at' => Carbon::now()->subWeeks(1)
+                'updated_at' => Carbon::now()->subWeeks(1),
             ],
             [
                 'name' => 'Sarah Abdullah',
@@ -134,7 +134,7 @@ class FeedbackSeeder extends Seeder
                 'platform_info' => $platformInfo1,
                 'additional_info' => $additionalInfo1,
                 'created_at' => Carbon::now()->subWeeks(2),
-                'updated_at' => Carbon::now()->subWeeks(2)
+                'updated_at' => Carbon::now()->subWeeks(2),
             ],
             [
                 'name' => 'Ismail Hamid',
@@ -148,7 +148,7 @@ class FeedbackSeeder extends Seeder
                 'platform_info' => null,
                 'additional_info' => $additionalInfo2,
                 'created_at' => Carbon::now()->subWeeks(3),
-                'updated_at' => Carbon::now()->subWeeks(3)
+                'updated_at' => Carbon::now()->subWeeks(3),
             ],
         ]);
     }

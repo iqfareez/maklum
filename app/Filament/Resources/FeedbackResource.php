@@ -51,7 +51,7 @@ class FeedbackResource extends Resource
             ->defaultSort('created_at', 'desc')
             ->actions([
                 Tables\Actions\ViewAction::make()
-                    ->url(fn(Feedback $record) => FeedbackResource::getUrl('view', ['record' => $record])),
+                    ->url(fn (Feedback $record) => FeedbackResource::getUrl('view', ['record' => $record])),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([

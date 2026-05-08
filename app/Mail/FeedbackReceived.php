@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Address;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
@@ -34,7 +35,7 @@ class FeedbackReceived extends Mailable implements ShouldQueue
         return new Envelope(
             subject: 'MPT Feedback Received',
             replyTo: $sender_email != null ? [
-                new Address($sender_email, data_get($this->feedbackData, 'name'))
+                new Address($sender_email, data_get($this->feedbackData, 'name')),
             ] : null,
         );
     }
@@ -55,7 +56,7 @@ class FeedbackReceived extends Mailable implements ShouldQueue
     /**
      * Get the attachments for the message.
      *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+     * @return array<int, Attachment>
      */
     public function attachments(): array
     {
