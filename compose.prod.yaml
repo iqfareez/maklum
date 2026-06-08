@@ -15,6 +15,32 @@ services:
       - default
       - reverse_proxy
 
+  queue:
+    image: ghcr.io/iqfareez/maklum:main
+    command: ["php", "/var/www/html/artisan", "queue:work", "--tries=3", "--sleep=3", "--max-time=3600"]
+    stop_signal: SIGTERM
+    stop_grace_period: 60s
+    restart: unless-stopped
+    environment:
+      # Enable opcache in production
+      - PHP_OPCACHE_ENABLE=1
+      # Reverse proxy settings
+      - ENABLE_TRUSTED_PROXY_CONFIG=true
+      - TRUSTED_PROXIES=*
+    env_file:
+      - stack.env
+    depends_on:
+      - db
+    networks:
+      - default
+      - reverse_proxy
+    healthcheck:
+      test: ["CMD", "healthcheck-queue"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
   db:
     image: mysql:8
     restart: unless-stopped
@@ -22,7 +48,9 @@ services:
       - db_data:/var/lib/mysql
     environment:
       MYSQL_DATABASE: maklum
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_USER: maklum
+      MYSQL_PASSWORD: maklum-replace-with-secure-password
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
     networks:
       - default
 

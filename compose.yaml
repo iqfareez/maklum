@@ -15,6 +15,29 @@ services:
     depends_on:
       - db
 
+  queue:
+    image: maklum
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: ["php", "/var/www/html/artisan", "queue:work", "--tries=1", "--sleep=1"]
+    stop_signal: SIGTERM
+    stop_grace_period: 60s
+    restart: unless-stopped
+    environment:
+      - APP_KEY=base64:E2UF/vR1DZ2PTWsWep+3Q1VoR8amZ6Fh4un6CFqcrMs= # regenerate this key for production use
+      - DB_HOST=db
+    env_file:
+      - .env
+    depends_on:
+      - db
+    healthcheck:
+      test: ["CMD", "healthcheck-queue"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
   db:
     image: mysql:8
     restart: unless-stopped
