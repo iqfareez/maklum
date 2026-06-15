@@ -1,6 +1,7 @@
 services:
   app:
     image: ghcr.io/iqfareez/maklum:main
+    restart: unless-stopped
     environment:
       # Enable opcache in production
       - PHP_OPCACHE_ENABLE=1
