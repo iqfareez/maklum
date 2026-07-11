@@ -1,23 +1,22 @@
 <?php
 
-namespace App\Filament\Resources\FeedbackResource\Pages;
+namespace App\Filament\Resources\Feedback\Pages;
 
-use App\Filament\Resources\FeedbackResource;
-use Filament\Infolists;
-use Filament\Infolists\Components\Section;
+use App\Filament\Resources\Feedback\FeedbackResource;
 use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Components\TextEntry\TextEntrySize;
-use Filament\Infolists\Infolist;
 use Filament\Resources\Pages\ViewRecord;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
+use Filament\Support\Enums\TextSize;
 
 class ViewFeedback extends ViewRecord
 {
     protected static string $resource = FeedbackResource::class;
 
-    public function infolist(Infolist $infolist): Infolist
+    public function infolist(Schema $schema): Schema
     {
-        return $infolist
-            ->schema([
+        return $schema
+            ->components([
                 TextEntry::make('created_at')
                     ->label('Created At')
                     ->formatStateUsing(function ($state) {
@@ -32,7 +31,7 @@ class ViewFeedback extends ViewRecord
                 TextEntry::make('email')
                     ->label('Sender Email'),
                 TextEntry::make('message')
-                    ->size(TextEntrySize::Large)
+                    ->size(TextSize::Large)
                     ->columnSpanFull(),
                 Section::make('Device Information')
                     ->collapsible()

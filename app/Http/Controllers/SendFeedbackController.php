@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SendFeedbackRequest;
 use App\Mail\FeedbackReceived;
 use App\Models\Feedback;
+use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -38,7 +39,7 @@ class SendFeedbackController extends Controller
                     'reference' => $feedback->public_id,
                 ], 200);
             });
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error('Failed to process feedback: '.$e->getMessage());
 
             return response()->json(['message' => 'Failed to process feedback. Please try again later.'], 500);

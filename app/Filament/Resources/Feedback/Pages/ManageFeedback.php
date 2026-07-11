@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Resources\FeedbackResource\Pages;
+namespace App\Filament\Resources\Feedback\Pages;
 
-use App\Filament\Resources\FeedbackResource;
-use Filament\Actions;
+use App\Filament\Resources\Feedback\FeedbackResource;
+use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ManageRecords;
 
 class ManageFeedback extends ManageRecords
@@ -15,7 +15,7 @@ class ManageFeedback extends ManageRecords
         return [
             // canCreate is set to false in FeedbackResource, so this
             // button will not be shown anyway
-            Actions\CreateAction::make(),
+            CreateAction::make(),
         ];
     }
 }

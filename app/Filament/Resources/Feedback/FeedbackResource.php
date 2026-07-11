@@ -1,26 +1,32 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Resources\Feedback;
 
-use App\Filament\Resources\FeedbackResource\Pages;
+use App\Filament\Resources\Feedback\Pages\ManageFeedback;
+use App\Filament\Resources\Feedback\Pages\ViewFeedback;
 use App\Models\Feedback;
-use Filament\Forms\Form;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\ViewAction;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Support\Enums\FontWeight;
-use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
 class FeedbackResource extends Resource
 {
     protected static ?string $model = Feedback::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                //
+        return $schema
+            ->components([
+                // the form is intended to be left empty. All submission
+                // for now is via API
             ]);
     }
 
@@ -28,35 +34,35 @@ class FeedbackResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('public_id')
+                TextColumn::make('public_id')
                     ->label('Feedback ID')
                     ->searchable()
                     ->badge()
                     ->color('primary'),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime('d/m/Y h:i A')
                     ->sortable()
                     ->wrap()
                     ->weight(fn ($record) => $record->created_at->isToday() ? FontWeight::Bold : null),
-                Tables\Columns\TextColumn::make('message')
+                TextColumn::make('message')
                     ->limit(65)
                     ->wrap()
                     ->html(),
-                Tables\Columns\TextColumn::make('email')
+                TextColumn::make('email')
                     ->toggleable(),
             ])
             ->filters([
                 //
             ])
             ->defaultSort('created_at', 'desc')
-            ->actions([
-                Tables\Actions\ViewAction::make()
+            ->recordActions([
+                ViewAction::make()
                     ->url(fn (Feedback $record) => FeedbackResource::getUrl('view', ['record' => $record])),
-                Tables\Actions\DeleteAction::make(),
+                DeleteAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -64,8 +70,8 @@ class FeedbackResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ManageFeedback::route('/'),
-            'view' => Pages\ViewFeedback::route('/{record}'),
+            'index' => ManageFeedback::route('/'),
+            'view' => ViewFeedback::route('/{record}'),
         ];
     }
 
