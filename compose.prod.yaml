@@ -8,6 +8,8 @@ services:
       # Reverse proxy settings
       - ENABLE_TRUSTED_PROXY_CONFIG=true
       - TRUSTED_PROXIES=*
+      # Enable Laravel automation
+      - AUTORUN_ENABLED=true
     env_file:
       - stack.env
     depends_on:
