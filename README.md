@@ -1,4 +1,6 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://github.com/user-attachments/assets/8cee6fb9-19a4-4ca4-aedd-7a17ec407500" width="400" alt="Maklum Logo"></a></p>
+<p align="center">
+  <img src="public/favicon.svg" width="128" height="128" alt="Wiwit logo">
+</p>
 
 # Maklum
 
@@ -10,9 +12,9 @@ _Demo username / password: `admin@example.com` / `pisang123`_
 
 ## Features
 
--   Receive feedback from external apps via API
--   List, view, and filter feedback entries
--   Receive email notifications for new feedback received (bring your own key)
+- Receive feedback from external apps via API
+- List, view, and filter feedback entries
+- Receive email notifications for new feedback received (bring your own key)
 
 ## Getting Started
 
